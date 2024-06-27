@@ -27,7 +27,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d --build'
+                    sh '''
+                        CONTAINER_IDS=$(sudo docker ps -aq)
+                        if [ ! -z "$CONTAINER_IDS" ]; then
+                            sudo docker stop $CONTAINER_IDS || true
+                            sudo docker rm -f $CONTAINER_IDS || true
+                        fi
+                    '''
+                    
+                    sh 'sudo docker-compose up -d --build'
                 }
             }
         }
