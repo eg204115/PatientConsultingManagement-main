@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
         stage('Checkout') {
@@ -33,6 +33,7 @@ pipeline {
                             docker rm -f $CONTAINER_IDS
                         fi
                     '''
+                    // Ensure this runs in the directory containing docker-compose.yml
                     sh 'docker-compose up -d --build'
                 }
             }
@@ -40,7 +41,7 @@ pipeline {
     }
     post {
         always {
-            bat 'docker logout'
+            sh 'docker logout'
         }
     }
 }
