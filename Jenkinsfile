@@ -1,7 +1,7 @@
 pipeline {
     agent any 
 
-        stages {
+    stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/eg204115/PatientConsultingManagement-main.git'
@@ -27,8 +27,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker rm -f $(docker ps -aq)'
-                    sh 'docker-compose up -d --build' 
+                    sh '''
+                        CONTAINER_IDS=$(docker ps -aq)
+                        if [ ! -z "$CONTAINER_IDS" ]; then
+                            docker rm -f $CONTAINER_IDS
+                        fi
+                    '''
+                    sh 'docker-compose up -d --build'
                 }
             }
         }
