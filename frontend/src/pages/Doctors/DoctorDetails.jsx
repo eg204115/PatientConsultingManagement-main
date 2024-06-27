@@ -1,7 +1,7 @@
 import { useState } from "react";
 import starIcon from "../../assets/images/Star.png";
 import DoctorAbout from "./DoctorAbout";
-import Feedback from "./feedback";
+import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
 import { BASE_URL } from "./../../config";
 import usefetchdata from "./../../hooks/usefetchdata";

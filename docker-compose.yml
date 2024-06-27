@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4115:4115"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/usr/src/app
+    depends_on:
+      - mongo
+    networks:
+      - patientconsulting-app
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/usr/src/app
+    depends_on:
+      - backend
+    networks:
+      - patientconsulting-app
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - patientconsulting-app
+
+networks:
+  patientconsulting-app:
+    driver: bridge
+
+volumes:
+  mongo-data:
