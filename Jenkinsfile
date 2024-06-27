@@ -34,7 +34,7 @@ pipeline {
                             sudo docker rm -f $CONTAINER_IDS || true
                         fi
                     '''
-                    
+
                     sh 'sudo docker-compose up -d --build'
                 }
             }
