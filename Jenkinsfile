@@ -28,14 +28,15 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        CONTAINER_IDS=$(sudo docker ps -aq)
+                        echo "123" | sudo -S docker ps -aq
+                        CONTAINER_IDS=$(echo "123" | sudo -S docker ps -aq)
                         if [ ! -z "$CONTAINER_IDS" ]; then
-                            sudo docker stop $CONTAINER_IDS || true
-                            sudo docker rm -f $CONTAINER_IDS || true
+                            echo "123" | sudo -S docker stop $CONTAINER_IDS || true
+                            echo "123" | sudo -S docker rm -f $CONTAINER_IDS || true
                         fi
                     '''
-
-                    sh 'sudo docker-compose up -d --build'
+                    
+                    sh 'echo "123" | sudo -S docker-compose up -d --build'
                 }
             }
         }
