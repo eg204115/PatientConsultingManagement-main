@@ -27,13 +27,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh '''
-                        CONTAINER_IDS=$(docker ps -aq)
-                        if [ ! -z "$CONTAINER_IDS" ]; then
-                            docker rm -f $CONTAINER_IDS
-                        fi
-                    '''
-                    // Ensure this runs in the directory containing docker-compose.yml
                     sh 'docker-compose up -d --build'
                 }
             }
